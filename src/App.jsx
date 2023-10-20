@@ -1,7 +1,12 @@
 import { useState } from "react";
+import { PokeApi } from "./components/PokeApi";
 
 function App() {
-    return <>Hola mundo!</>;
+    return (
+        <>
+            <PokeApi />
+        </>
+    );
 }
 
 export default App;
