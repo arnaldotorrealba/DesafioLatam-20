@@ -2,8 +2,9 @@
 
 Desafío que pone a prueba el manejo de estados de componentes usando React.js y sus hooks, generar componentes de forma dinámica y obtener los datos desde una API. Todo el desafío queda explicado en [este Archivo PDF](https://github.com/arnaldotorrealba/DesafioLatam-20/blob/main/Desafio_Consumo_API_React.pdf?raw=true).
 
-👉 [PokeAPI Doc](https://pokeapi.co/) 🚀
-👉 [Live demo](https://arnaldotorrealba.github.io/DesafioLatam-20) 🚀
+👉 [PokeAPI Doc](https://pokeapi.co/)
+👉 [Live demo](https://arnaldotorrealba.github.io/DesafioLatam-20)
+👉 [Video Explicativo](https://youtu.be/_JN7DUlabbI)
 
 ## 📚 Tecnologías usadas
 
