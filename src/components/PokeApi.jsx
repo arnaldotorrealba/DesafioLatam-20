@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
+import ListGroup from "react-bootstrap/ListGroup";
 
 export const PokeApi = () => {
     const [selectedValue, setSelectedValue] = useState("type");
@@ -45,6 +46,7 @@ export const PokeApi = () => {
                 name: response.data.name,
                 height: response.data.height,
                 weight: response.data.weight,
+                baseExp: response.data.base_experience,
                 img: response.data.sprites.front_default
                     ? response.data.sprites.front_default
                     : "./pokeball-01.png",
@@ -120,11 +122,21 @@ export const PokeApi = () => {
                 {pokeList ? (
                     pokeList.map((item) => {
                         return (
-                            <Card key={item.name} style={{ width: "8rem" }}>
+                            <Card key={item.name} style={{ width: "12rem" }}>
                                 <Card.Img variant="top" src={item.img} />
                                 <Card.Body>
                                     <Card.Title>{item.name}</Card.Title>
-                                    <Card.Text>Some quick example</Card.Text>
+                                    <ListGroup variant="flush">
+                                        <ListGroup.Item>
+                                            Weight: {item.weight} hg.
+                                        </ListGroup.Item>
+                                        <ListGroup.Item>
+                                            Height: {item.height} dm.
+                                        </ListGroup.Item>
+                                        <ListGroup.Item>
+                                            Exp. base: {item.baseExp}
+                                        </ListGroup.Item>
+                                    </ListGroup>
                                 </Card.Body>
                             </Card>
                         );
