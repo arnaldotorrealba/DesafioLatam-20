@@ -9,6 +9,7 @@ export const PokeApi = () => {
     const [secondSelectedValue, setSecondSelectedValue] = useState(
         "https://pokeapi.co/api/v2/type/1"
     );
+    const [thirdSelectedValue, setThirdSelectedValue] = useState("");
     const [pokeData, setPokeData] = useState([]);
     const [pokeList, setPokeList] = useState([]);
 
@@ -46,7 +47,6 @@ export const PokeApi = () => {
                 name: response.data.name,
                 height: response.data.height,
                 weight: response.data.weight,
-                baseExp: response.data.base_experience,
                 img: response.data.sprites.front_default
                     ? response.data.sprites.front_default
                     : "./pokeball-01.png",
@@ -72,17 +72,54 @@ export const PokeApi = () => {
             });
     };
 
+    const orderPokeListBy = (atribute) => {
+        let orderedList;
+        if (typeof pokeList[0][atribute] === "string") {
+            orderedList = [...pokeList].sort((a, b) =>
+                a[atribute].localeCompare(b[atribute])
+            );
+        } else {
+            orderedList = [...pokeList].sort(
+                (a, b) => a[atribute] - b[atribute]
+            );
+        }
+        setPokeList(orderedList);
+    };
+
     const handleFirstSelectChange = (e) => {
         const selectedOption = e.target.value;
         setSelectedValue(selectedOption);
         selectedOption == "type"
             ? setSecondSelectedValue("https://pokeapi.co/api/v2/type/1/")
             : setSecondSelectedValue("https://pokeapi.co/api/v2/ability/1/");
+        setThirdSelectedValue("");
     };
 
     const handleSecondSelectChange = (e) => {
         const selectedOption = e.target.value;
         setSecondSelectedValue(selectedOption);
+        setThirdSelectedValue("");
+    };
+
+    const handleThirdSelectChange = (e) => {
+        const selectedOption = e.target.value;
+        setThirdSelectedValue(selectedOption);
+
+        switch (selectedOption) {
+            case "name":
+                orderPokeListBy("name");
+                break;
+            case "weight":
+                orderPokeListBy("weight");
+                break;
+            case "height":
+                orderPokeListBy("height");
+                break;
+            default:
+                console.log(
+                    "Lo lamentamos, no se puede ordenar por este atributo"
+                );
+        }
     };
 
     useEffect(() => {
@@ -98,6 +135,8 @@ export const PokeApi = () => {
             <Form.Select
                 aria-label="Default select example"
                 onChange={handleFirstSelectChange}
+                style={{ width: "10rem" }}
+                value={selectedValue}
             >
                 <option value="type">Tipo</option>
                 <option value="ability">Habilidad</option>
@@ -105,6 +144,8 @@ export const PokeApi = () => {
             <Form.Select
                 aria-label="Default select example"
                 onChange={handleSecondSelectChange}
+                value={secondSelectedValue}
+                style={{ width: "10rem" }}
             >
                 {pokeData ? (
                     pokeData.map((item) => {
@@ -118,11 +159,22 @@ export const PokeApi = () => {
                     <h1>Not found</h1>
                 )}
             </Form.Select>
+            <Form.Select
+                aria-label="Default select example"
+                onChange={handleThirdSelectChange}
+                value={thirdSelectedValue}
+                style={{ width: "10rem" }}
+            >
+                <option>Seleccione:</option>
+                <option value="name">Nombre</option>
+                <option value="weight">Peso</option>
+                <option value="height">Altura</option>
+            </Form.Select>
             <div className="poke-container">
                 {pokeList ? (
                     pokeList.map((item) => {
                         return (
-                            <Card key={item.name} style={{ width: "12rem" }}>
+                            <Card key={item.name} style={{ width: "15rem" }}>
                                 <Card.Img variant="top" src={item.img} />
                                 <Card.Body>
                                     <Card.Title>{item.name}</Card.Title>
@@ -132,9 +184,6 @@ export const PokeApi = () => {
                                         </ListGroup.Item>
                                         <ListGroup.Item>
                                             Height: {item.height} dm.
-                                        </ListGroup.Item>
-                                        <ListGroup.Item>
-                                            Exp. base: {item.baseExp}
                                         </ListGroup.Item>
                                     </ListGroup>
                                 </Card.Body>
